@@ -147,42 +147,42 @@
 
 
 
-    let obj = { name: 1 }
+    // let obj = { name: 1 }
 
-    function func1 () {
-        obj.name = 2
-    }
+    // function func1 () {
+    //     obj.name = 2
+    // }
 
-    let func2 = function () {
-        this.name = 2
-    }.bind(obj)
+    // let func2 = function () {
+    //     this.name = 2
+    // }.bind(obj)
 
-    let func3 = function (obj) {
-            obj.name=2
-    }
+    // let func3 = function (obj) {
+    //         obj.name=2
+    // }
 
 
-    function test (func) {
-        let i
-        for (i = 0;i < 1000000; i++) func()
-    }
+    // function test (func) {
+    //     let i
+    //     for (i = 0;i < 1000000; i++) func()
+    // }
 
-    function test1 (func,obj) {
-        let i
-        for (i = 0;i < 1000000; i++) func(obj)
-    }
+    // function test1 (func,obj) {
+    //     let i
+    //     for (i = 0;i < 1000000; i++) func(obj)
+    // }
 
-    console.time('func1')
-    test(func1)
-    console.timeEnd('func1')
+    // console.time('func1')
+    // test(func1)
+    // console.timeEnd('func1')
 
-    console.time('func2')
-    test(func2)
-    console.timeEnd('func2')
+    // console.time('func2')
+    // test(func2)
+    // console.timeEnd('func2')
 
-    console.time('func3')
-    test1(func3,obj)
-    console.timeEnd('func3')
+    // console.time('func3')
+    // test1(func3,obj)
+    // console.timeEnd('func3')
 
 </script>
 </body>
