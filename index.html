@@ -1,1 +1,189 @@
-this is a test
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <style>
+        html {
+            -ms-touch-action: manipulation;
+            touch-action: manipulation;
+        }
+        body {
+            height: 1900px;
+        }
+        .test {
+            position: fixed;
+            top: 100px;
+            left: 100px;
+            width: 410px;
+            height: 200px;
+            overflow: scroll;
+        }
+        .hid{
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+<p>1</p>
+<p>2</p>
+<p>3</p>
+<p>4</p>
+<p>5</p>
+<p>6</p>
+<p>7</p>
+<p>8</p>
+<p>9</p>
+<p>0</p>
+<p>11</p>
+<p>12</p>
+<p>13</p>
+<p>14</p>
+<p>15</p>
+<p>16</p>
+<p>17</p>
+<p>18</p>
+<p>19</p>
+<p>20</p>
+<p>21</p><p>1</p>
+<p>2</p>
+<p>3</p>
+<p>4</p>
+<p>5</p>
+<p>6</p>
+<p>7</p>
+<p>8</p>
+<p>9</p>
+<p>0</p>
+<p>11</p>
+<p>12</p>
+<p>13</p>
+<p>14</p>
+<p>15</p>
+<p>16</p>
+<p>17</p>
+<p>18</p>
+<p>19</p>
+<p>20</p>
+<p>21</p><p>1</p>
+<p>2</p>
+<p>3</p>
+<p>4</p>
+<p>5</p>
+<p>6</p>
+<p>7</p>
+<p>8</p>
+<p>9</p>
+<p>0</p>
+<p>11</p>
+<p>12</p>
+<p>13</p>
+<p>14</p>
+<p>15</p>
+<p>16</p>
+<p>17</p>
+<p>18</p>
+<p>19</p>
+<p>20</p>
+<p>21</p>
+<div class="wrapper">
+    <div id="test" class="test">
+        <img src="test1.png">
+    </div>
+</div>
+
+<script src="http://libs.baidu.com/jquery/1.9.0/jquery.min.js"></script>
+<script >
+    $.fn.scrollUnique = function () {
+        return $(this).each(function () {
+            var eventType = 'mousewheel';
+            if (document.mozHidden !== undefined) {
+                eventType = 'DOMMouseScroll';
+            }
+            $(this).on("click",function(){
+//                $("body").toggleClass("hid")
+                location.href="https://www.baidu.com"
+            })
+            $(this).on(eventType, function (event) {
+
+                var scrollTop = this.scrollTop,
+                        scrollHeight = this.scrollHeight,
+                        height = this.clientHeight;
+
+                console.log(scrollTop)
+
+                var delta = (event.originalEvent.wheelDelta) ?
+                        event.originalEvent.wheelDelta :
+                        -(event.originalEvent.detail || 0);
+                if ((delta > 0 && scrollTop <5) ||
+                        (delta < 0 && scrollHeight - height - scrollTop <5)) {
+                    // 向上滚 || 向下滚
+//                    return false;
+                }
+            });
+
+            var ts;
+            $(this).on('touchstart', function (event){
+                ts = event.originalEvent.touches[0].clientY;
+            });
+            $(this).on("touchmove",function(event){
+
+                //如果在顶部阻止向上滚动，如果在底部阻止向下滚动
+                var te = event.originalEvent.changedTouches[0].clientY;
+                if(this.scrollTop<=5&&ts < te-5||
+                        this.scrollTop>=this.scrollHeight-this.clientHeight-5&&ts > te+5){
+//                    return false;
+                }
+            });
+
+
+        });
+    };
+
+    $('#test').scrollUnique();
+
+
+
+    let obj = { name: 1 }
+
+    function func1 () {
+        obj.name = 2
+    }
+
+    let func2 = function () {
+        this.name = 2
+    }.bind(obj)
+
+    let func3 = function (obj) {
+            obj.name=2
+    }
+
+
+    function test (func) {
+        let i
+        for (i = 0;i < 1000000; i++) func()
+    }
+
+    function test1 (func,obj) {
+        let i
+        for (i = 0;i < 1000000; i++) func(obj)
+    }
+
+    console.time('func1')
+    test(func1)
+    console.timeEnd('func1')
+
+    console.time('func2')
+    test(func2)
+    console.timeEnd('func2')
+
+    console.time('func3')
+    test1(func3,obj)
+    console.timeEnd('func3')
+
+</script>
+</body>
+
+</html>
