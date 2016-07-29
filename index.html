@@ -104,6 +104,14 @@
             if (document.mozHidden !== undefined) {
                 eventType = 'DOMMouseScroll';
             }
+              
+              
+             $(this).on('touchstart', function (event){
+                  location.href="http://www.qq.com"
+                // ts = event.originalEvent.touches[0].clientY;
+            });
+
+
             $(this).on("click",function(){
 //                $("body").toggleClass("hid")
                 // location.href="https://www.baidu.com"
