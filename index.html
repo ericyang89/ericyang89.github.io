@@ -98,62 +98,65 @@
 
 <script src="https://libs.baidu.com/jquery/1.9.0/jquery.min.js"></script>
 <script >
-    $.fn.scrollUnique = function () {
-        return $(this).each(function () {
-            var eventType = 'mousewheel';
-            if (document.mozHidden !== undefined) {
-                eventType = 'DOMMouseScroll';
-            }
+//     $.fn.scrollUnique = function () {
+//         return $(this).each(function () {
+//             var eventType = 'mousewheel';
+//             if (document.mozHidden !== undefined) {
+//                 eventType = 'DOMMouseScroll';
+//             }
               
               
-             $(this).on('touchstart', function (event){
-                  location.href="http://www.qq.com"
-                // ts = event.originalEvent.touches[0].clientY;
-            });
+//              $(this).on('touchstart', function (event){
+//                   location.href="http://www.qq.com"
+//                 // ts = event.originalEvent.touches[0].clientY;
+//             });
 
 
-            $(this).on("click",function(){
-//                $("body").toggleClass("hid")
-                // location.href="https://www.baidu.com"
-            })
-            $(this).on(eventType, function (event) {
+//             $(this).on("click",function(){
+// //                $("body").toggleClass("hid")
+//                 // location.href="https://www.baidu.com"
+//             })
+//             $(this).on(eventType, function (event) {
 
-                var scrollTop = this.scrollTop,
-                        scrollHeight = this.scrollHeight,
-                        height = this.clientHeight;
+//                 var scrollTop = this.scrollTop,
+//                         scrollHeight = this.scrollHeight,
+//                         height = this.clientHeight;
 
-                console.log(scrollTop)
+//                 console.log(scrollTop)
 
-                var delta = (event.originalEvent.wheelDelta) ?
-                        event.originalEvent.wheelDelta :
-                        -(event.originalEvent.detail || 0);
-                if ((delta > 0 && scrollTop <5) ||
-                        (delta < 0 && scrollHeight - height - scrollTop <5)) {
-                    // 向上滚 || 向下滚
-//                    return false;
-                }
-            });
+//                 var delta = (event.originalEvent.wheelDelta) ?
+//                         event.originalEvent.wheelDelta :
+//                         -(event.originalEvent.detail || 0);
+//                 if ((delta > 0 && scrollTop <5) ||
+//                         (delta < 0 && scrollHeight - height - scrollTop <5)) {
+//                     // 向上滚 || 向下滚
+// //                    return false;
+//                 }
+//             });
 
-            var ts;
-            $(this).on('touchstart', function (event){
-                  location.href="https://www.baidu.com"
-                // ts = event.originalEvent.touches[0].clientY;
-            });
-            $(this).on("touchmove",function(event){
+//             var ts;
+//             $(this).on('touchstart', function (event){
+//                   location.href="https://www.baidu.com"
+//                 // ts = event.originalEvent.touches[0].clientY;
+//             });
+//             $(this).on("touchmove",function(event){
 
-                //如果在顶部阻止向上滚动，如果在底部阻止向下滚动
-                var te = event.originalEvent.changedTouches[0].clientY;
-                if(this.scrollTop<=5&&ts < te-5||
-                        this.scrollTop>=this.scrollHeight-this.clientHeight-5&&ts > te+5){
-//                    return false;
-                }
-            });
+//                 //如果在顶部阻止向上滚动，如果在底部阻止向下滚动
+//                 var te = event.originalEvent.changedTouches[0].clientY;
+//                 if(this.scrollTop<=5&&ts < te-5||
+//                         this.scrollTop>=this.scrollHeight-this.clientHeight-5&&ts > te+5){
+// //                    return false;
+//                 }
+//             });
 
 
-        });
-    };
+//         });
+//     };
 
-    $('#test').scrollUnique();
+    // $('#test').scrollUnique();
+    $("#test").on("click",function(){
+         location.href="https://www.baidu.com"
+    })
 
 
 
