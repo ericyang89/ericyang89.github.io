@@ -42,5 +42,21 @@ Flex Box 由伸缩容器和伸缩项目组成。通过设置元素的 display �
 
 伸缩容器中的每一个子元素都是一个伸缩项目。伸缩项目可以是任意数量的。伸缩容器外和伸缩项目内的一切元素都不受影响。简单地说，Flexbox 定义了伸缩容器内伸缩项目该如何布局。
 
+A block formatting context is a part of a visual CSS rendering of a Web page. It is the region in which the layout of block boxes occurs and in which floats interact with each other.
+
+A block formatting context is created by one of the following:
+
+the root element or something that contains it
+floats (elements where float is not none)
+absolutely positioned elements (elements where position is absolute or fixed)
+inline-blocks (elements with display: inline-block)
+table cells (elements with display: table-cell, which is the default for HTML table cells)
+table captions (elements with display: table-caption, which is the default for HTML table captions)
+elements where overflow has a value other than visible
+flex boxes (elements with display: flex or inline-flex)
+A block formatting context contains everything inside of the element creating it that is not also inside a descendant element that creates a new block formatting context.
+
+Block formatting contexts are important for the positioning (see float) and clearing (see clear) of floats. The rules for positioning and clearing of floats apply only to things within the same block formatting context. Floats do not affect the layout of things in other block formatting contexts, and clear only clears past floats in the same block formatting context.
+
 
 参考：http://www.cnblogs.com/dingyufenglian/p/4845477.html
