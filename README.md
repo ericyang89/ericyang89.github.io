@@ -46,14 +46,14 @@ A block formatting context is a part of a visual CSS rendering of a Web page. It
 
 A block formatting context is created by one of the following:
 
-the root element or something that contains it
-floats (elements where float is not none)
-absolutely positioned elements (elements where position is absolute or fixed)
-inline-blocks (elements with display: inline-block)
-table cells (elements with display: table-cell, which is the default for HTML table cells)
-table captions (elements with display: table-caption, which is the default for HTML table captions)
-elements where overflow has a value other than visible
-flex boxes (elements with display: flex or inline-flex)
++ the root element or something that contains it
++ floats (elements where float is not none)
++ absolutely positioned elements (elements where position is absolute or fixed)
++ inline-blocks (elements with display: inline-block)
++ table cells (elements with display: table-cell, which is the default for HTML table cells)
++ table captions (elements with display: table-caption, which is the default for HTML table captions)
++ elements where overflow has a value other than visible
++ flex boxes (elements with display: flex or inline-flex)
 A block formatting context contains everything inside of the element creating it that is not also inside a descendant element that creates a new block formatting context.
 
 Block formatting contexts are important for the positioning (see float) and clearing (see clear) of floats. The rules for positioning and clearing of floats apply only to things within the same block formatting context. Floats do not affect the layout of things in other block formatting contexts, and clear only clears past floats in the same block formatting context.
