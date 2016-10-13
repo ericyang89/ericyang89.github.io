@@ -1,133 +1,46 @@
-# 1 每个模块添加注释说明，包括模块对应的位置、模块的描述、编写（负责）人。例如：
-```JavaScript
-/**
- * @module dyshow/page/index/app
- * @desc   鱼秀-首页
- * @author zhuzijian@douyu.tv
- */
- ```
-# 2 所用模块都提供一个init作为初始化的方法；这也是对外暴露的唯一的一个方法；如果有参数，在模块内部会有默认值。
-   + init方法一般包含：初始化dom（getDom）、事件绑定（bindEvent）和其他方法。
-   + 初始化dom，把与dom紧耦合的代码放在一个位置方便管理；也减少多次dom查询。
-   + 事件绑定，包含dom事件的绑定，包含监听的一些自定义事件（Observe）和 flash对js的调用。
-   
- ```JavaScript
-/**
- * @module dyshow/page/room/mod/patron
- * @desc   鱼秀直播间---守护
- * @author yangkun@douyu.tv
- */
-define('dyshow/page/room/mod/patron', [
-    'jquery',
-    'shark/observer',
+## What‘s FC？
 
-    'dyshow/context'
-], function(
-    $, Observer,
-    Context
-){
-    'use strict';
+FC的全称是：Formatting Contexts，是W3C CSS2.1规范中的一个概念。它是页面中的一块渲染区域，并且有一套渲染规则，它决定了其子元素将如何定位，以及和其他元素的关系和相互作用。
 
-    var toFixed=Number.prototype.toFixed,
-        isPatroned=false;
+### BFC
 
-    var Patron={
-        init:function(){
-            var self = this;
-            self.getDoms();
-            self.bindEvent();
-            self.scrollable();
-        },
-        getDoms:function(){
-            this.doms={
-                patronBox:$('[data-rel="patron-box"]'),
-                patronSum:$('[data-sum="patron"]')
-            };
-        },
-        bindEvent:function(){
-            var self=this,
-                $patronBox=self.doms.patronBox;
-
-            $patronBox.on('click','[data-rel="patron-add"]',function(){
-                Observer.trigger('mod.patron.buy');
-            });
-
-            //渲染守护列表
-            API.reg('room_data_patronList',function(datastr){
-                var data=self.decodePatronList(datastr);
-                self.render(data);
-            });
-
-            //获取用户余额
-            Observer.on('mod.userinfo.userinfoready', function(data){
-                _gold=data.gold||0;
-                $('[data-login-user="gold"]').text(_gold);
-            });
-
-            //登录后查询守护列表
-            Observer.on('mod.login.userinfo',function(){
-                API.exe('js_patronList');
-            });
+BFC(Block Formatting Contexts)直译为"块级格式化上下文"。Block Formatting Contexts就是页面上的一个隔离的渲染区域，容器里面的子元素不会在布局上影响到外面的元素，反之也是如此。如何产生BFC？
 
 
-        },
-        scrollable:function(){        },
-        destroy:function(){
-            $('.show-dialog-mask').remove();
-        }
++ float的值不为none。
++ overflow的值不为visible。
++ position的值为absolute和fixed。
++ display的值为table-cell, table-caption, inline-block中的任何一个。
++ 根元素(html)??
++ canvas??
 
-    };
+那BFC一般有什么用呢？比如常见的多栏布局，结合块级别元素浮动，里面的元素则是在一个相对隔离的环境里运行。
 
-    return {
-        init:function(){
-            Patron.init();
-        }
-    };
+### IFC
 
-});
+IFC(Inline Formatting Contexts)直译为"内联格式化上下文"，IFC的line box（线框）高度由其包含行内元素中最高的实际高度计算而来（不受到竖直方向的padding/margin影响)
+
+IFC中的line box一般左右都贴紧整个IFC，但是会因为float元素而扰乱。float元素会位于IFC与与line box之间，使得line box宽度缩短。 同个ifc下的多个line box高度会不同。 IFC中时不可能有块级元素的，当插入块级元素时（如p中插入div）会产生两个匿名块与div分隔开，即产生两个IFC，每个IFC对外表现为块级元素，与div垂直排列。
+
+那么IFC一般有什么用呢？
+
+水平居中：当一个块要在环境中水平居中时，设置其为inline-block则会在外层产生IFC，通过text-align则可以使其水平居中。
+
+垂直居中：创建一个IFC，用其中一个元素撑开父元素的高度，然后设置其vertical-align:middle，其他行内元素则可以在此父元素下垂直居中。
+
+### GFC
+
+GFC(GridLayout Formatting Contexts)直译为"网格布局格式化上下文"，当为一个元素设置display值为grid的时候，此元素将会获得一个独立的渲染区域，我们可以通过在网格容器（grid container）上定义网格定义行（grid definition rows）和网格定义列（grid definition columns）属性各在网格项目（grid item）上定义网格行（grid row）和网格列（grid columns）为每一个网格项目（grid item）定义位置和空间。
+
+那么GFC有什么用呢，和table又有什么区别呢？首先同样是一个二维的表格，但GridLayout会有更加丰富的属性来控制行列，控制对齐以及更为精细的渲染语义和控制。
+
+### FFC
+
+FFC(Flex Formatting Contexts)直译为"自适应格式化上下文"，display值为flex或者inline-flex的元素将会生成自适应容器（flex container），可惜这个牛逼的属性只有谷歌和火狐支持，不过在移动端也足够了，至少safari和chrome还是OK的，毕竟这俩在移动端才是王道。
+
+Flex Box 由伸缩容器和伸缩项目组成。通过设置元素的 display 属性为 flex 或 inline-flex 可以得到一个伸缩容器。设置为 flex 的容器被渲染为一个块级元素，而设置为 inline-flex 的容器则渲染为一个行内元素。
+
+伸缩容器中的每一个子元素都是一个伸缩项目。伸缩项目可以是任意数量的。伸缩容器外和伸缩项目内的一切元素都不受影响。简单地说，Flexbox 定义了伸缩容器内伸缩项目该如何布局。
 
 
-
- ```
- 
-# 3 涉及到逻辑的只用id选择器和data-属性选择器；所有的class选择器，都是和样式相关。例如：
- ```javascript
-     //好
-     this.doms={
-                    $patronBox:$('[data-rel="patron-box"]'),
-                    $patronSum:$('[data-sum="patron"]')
-    };
-    
-    //不好
-    this.doms={
-                    $patronBox:$('.patron-box'),
-                    $patronSum:$('patron-sum')
-    };
-```
-
-# 4 模块间交互使用Observer，具体方法参见如下示例：
-+ 在chat-user-manager模块，通过Observer，维护chat模块的黑名单
-+ 在chat-msg模块获得chat-shield模块的数据，获取数据所以用fire，比trigger性能好。
-+ ？？Observer 标识，取名;按照模块的路径？？//TODO
-```JavaScript
-    //chat模块
-	Observer.on('mod.chat.blackList.set', function(id) {
-		if ( undefined === id ) return;
-		Vars.blackList.push(id);
-	});
-	
-	//chat-user-manager 模块
-	Observer.trigger('mod.chat.blackList.set', Vars.rel);
-	
-	
-	<!--跨模块，取数据；fire只执行第一个监听-->
-	//chat-shield 模块
-	Observer.on('mod.chat.msg.shield', function() {
-		return Vars.checkedMap;
-	});
-	
-	//chat-msg模块（其他模块）
-	Observer.fire('mod.chat.msg.shield').message
-	
-	
- ```
+参考：http://www.cnblogs.com/dingyufenglian/p/4845477.html
